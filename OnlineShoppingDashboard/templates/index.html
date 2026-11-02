@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Shopping Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f6fa;
+        }
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #172554;
+            color: white;
+            position: fixed;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 { color: #60a5fa; }
+        .sidebar p { padding: 12px; }
+        .main {
+            margin-left: 240px;
+            padding: 25px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px #ddd;
+        }
+        .card h3 { color: #64748b; }
+        .card h1 { color: #172554; }
+        table {
+            background: white;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 18px;
+            background: #172554;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>ShopAdmin</h2>
+    <p>Dashboard</p>
+    <p>Customers</p>
+    <p>Products</p>
+    <p>Orders</p>
+    <p>Payments</p>
+    <p>Reports</p>
+</div>
+
+<div class="main">
+
+    <h1>Admin Dashboard</h1>
+    <p>Welcome to Online Shopping Management</p>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total Customers</h3>
+            <h1>{{ customers }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>Total Products</h3>
+            <h1>{{ products }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>Total Orders</h3>
+            <h1>{{ orders }}</h1>
+        </div>
+    </div>
+
+    <h2>Recent Orders</h2>
+
+    <table border="1" width="100%">
+        <tr>
+            <th>Customer Name</th>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Total Amount</th>
+        </tr>
+
+        {% for order in recent_orders %}
+        <tr>
+            <td>{{ order[0] }}</td>
+            <td>{{ order[1] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>₹{{ order[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Sales Report</h2>
+
+    <div class="card">
+        <h3>Total Revenue</h3>
+        <h1>₹{{ revenue }}</h1>
+    </div>
+
+    <h3>Payment Status</h3>
+
+    <table border="1" width="100%">
+        <tr>
+            <th>Payment Status</th>
+            <th>Total Payments</th>
+        </tr>
+
+        {% for payment in payment_report %}
+        <tr>
+            <td>{{ payment[0] }}</td>
+            <td>{{ payment[1] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Add New Product</h2>
+
+    <form action="/add_product" method="POST">
+        <input type="text" name="product_name" placeholder="Product Name" required>
+        <input type="text" name="category" placeholder="Category" required>
+        <input type="number" name="price" placeholder="Price" required>
+        <input type="number" name="stock" placeholder="Stock" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Products Management</h2>
+
+    <table border="1" width="100%">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+
+        {% for product in product_list %}
+        <tr>
+            <td>{{ product[0] }}</td>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[2] }}</td>
+            <td>₹{{ product[3] }}</td>
+            <td>{{ product[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Add New Customer</h2>
+
+    <form action="/add_customer" method="POST">
+        <input type="text" name="name" placeholder="Customer Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Phone" required>
+        <input type="text" name="address" placeholder="Address" required>
+        <button type="submit">Add Customer</button>
+    </form>
+
+    <h2>Customers Management</h2>
+
+    <table border="1" width="100%">
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+        </tr>
+
+        {% for customer in customer_list %}
+        <tr>
+            <td>{{ customer[0] }}</td>
+            <td>{{ customer[1] }}</td>
+            <td>{{ customer[2] }}</td>
+            <td>{{ customer[3] }}</td>
+            <td>{{ customer[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
